@@ -1,0 +1,215 @@
+<!--
+  PRODUCT IMAGE FILES — replace these PNGs with your own artwork, keeping the same filenames:
+  images/CitrusSoda200x200.png
+  images/OrangeSoda200x200.png
+  images/LemonSoda200x200.png
+  images/BerryOrchardSoda200x200.png
+  images/GrapeSoda200x200.png
+  Image paths are assigned to products near the top of js/data.js.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PopDrop — Real Fruit. Real Fizz.</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">POP<span>DROP</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Shop</a>
+    </div>
+    <div class="nav-actions">
+      <a href="account.html" class="nav-account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        <span id="account-label">Sign In</span>
+      </a>
+      <a href="cart.html" class="nav-cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart
+        <span class="cart-badge" id="cart-badge">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <span class="hero-eyebrow">Real fruit. Real fizz.</span>
+          <h1>FEEL THE POP<br>IN EVERY<br><span>DROP.</span></h1>
+          <p class="hero-sub">Five bold flavors. Zero artificial junk. PopDrop is the soda that tastes like it means business.</p>
+          <div class="hero-btns">
+            <a href="products.html" class="btn-primary" style="background:#FFD166;color:#1A1A1A;">Shop All Flavors</a>
+            <a href="products.html" class="btn-ghost">Find Your Flavor</a>
+          </div>
+        </div>
+        <div class="hero-cans" id="hero-cans"></div>
+      </div>
+      <svg class="hero-wave" viewBox="0 0 1440 60" fill="white" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z"/>
+      </svg>
+    </section>
+
+    <!-- FLAVOR STRIP -->
+    <section class="flavor-strip">
+      <div class="section-header">
+        <h2>PICK YOUR POP</h2>
+        <p>Five flavors. All killer, no filler.</p>
+      </div>
+      <div class="flavor-grid" id="flavor-grid"></div>
+    </section>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner">
+      <div>
+        <p class="promo-eyebrow">Limited Time</p>
+        <h2>MIX ANY 6, GET 10% OFF</h2>
+        <p>Build your own variety pack. Six or more cans also ship free.</p>
+      </div>
+      <a href="products.html" class="btn-primary">Build a Pack →</a>
+    </div>
+
+    <!-- FEATURED -->
+    <section class="products-section">
+      <div class="products-header">
+        <h2>FAN FAVORITES</h2>
+        <a href="products.html" class="see-all">See all →</a>
+      </div>
+      <div class="products-grid" id="featured-grid"></div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="values">
+      <div class="values-grid">
+        <div>
+          <div class="value-icon">🍊</div>
+          <h3 class="value-title">Real Fruit Juice</h3>
+          <p class="value-body">Every can is made with actual fruit juice concentrates — not artificial flavoring.</p>
+        </div>
+        <div>
+          <div class="value-icon">⚡</div>
+          <h3 class="value-title">Maximum Fizz</h3>
+          <p class="value-body">Carbonated to the edge of reason. PopDrop delivers a serious bubble experience.</p>
+        </div>
+        <div>
+          <div class="value-icon">🌱</div>
+          <h3 class="value-title">Clean Ingredients</h3>
+          <p class="value-body">No HFCS, no artificial colors, no compromises. Just good soda done right.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter">
+      <h2>NEW FLAVORS FIRST</h2>
+      <p>Sign up and be the first to know when new drops land.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:var(--orange);font-weight:800;\'>You\'re in! 🎉</p>'">
+        <input type="email" placeholder="your@email.com" required />
+        <button type="submit" class="btn-primary">Drop In</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">POP<span>DROP</span></div>
+        <p class="footer-tagline">Real ingredients. Real fizz. No compromises.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Shop</p>
+        <a href="products.html">All Flavors</a>
+        <a href="products.html">Variety Packs</a>
+        <a href="products.html">Gift Sets</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Company</p>
+        <a href="#">Our Story</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Support</p>
+        <a href="#">FAQ</a>
+        <a href="#">Shipping</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PopDrop Beverage Co. All rights reserved.</span>
+      <span>Made with fizz and love.</span>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Hero cans
+    const heroCans = document.getElementById("hero-cans");
+    const heroProducts = PRODUCTS.slice(0, 3);
+    heroProducts.forEach((p, i) => {
+      const offsets = [6, 0, -6];
+      const yOffsets = [0, -20, 0];
+      const sizes = [170, 220, 170];
+      const div = document.createElement("div");
+      div.className = "hero-can-wrap";
+      div.style.transform = `rotate(${offsets[i]}deg) translateY(${yOffsets[i]}px)`;
+      div.style.zIndex = i === 1 ? 10 : 1;
+      div.innerHTML = makeProductImage(p, sizes[i]);
+      heroCans.appendChild(div);
+    });
+
+    // Flavor grid
+    const flavorGrid = document.getElementById("flavor-grid");
+    PRODUCTS.forEach(p => {
+      flavorGrid.innerHTML += `
+        <a href="product.html?id=${p.id}" class="flavor-card" style="background:${p.highlight}">
+          <div class="can-wrap">${makeProductImage(p, 120)}</div>
+          <div>
+            <p class="flavor-name" style="color:${p.canColor}">${p.name}</p>
+            <p class="flavor-sub">${p.flavor}</p>
+          </div>
+        </a>`;
+    });
+
+    // Featured products
+    const featuredGrid = document.getElementById("featured-grid");
+    PRODUCTS.slice(0, 3).forEach(p => {
+      featuredGrid.innerHTML += `
+        <div class="product-card">
+          <a href="product.html?id=${p.id}">
+            <div class="product-card-img" style="background:${p.highlight}">
+              <div class="can-wrap">${makeProductImage(p, 160)}</div>
+            </div>
+          </a>
+          <div class="product-card-body">
+            <div class="product-card-top">
+              <a href="product.html?id=${p.id}" class="product-card-name">${p.name}</a>
+              <span class="product-card-price">${formatPeso(p.price)}</span>
+            </div>
+            <p class="product-card-flavor">${p.flavor}</p>
+            <p class="product-card-desc">${p.description}</p>
+            <div class="product-card-actions">
+              <a href="product.html?id=${p.id}" class="btn-outline">View Details</a>
+              <button class="btn-primary" onclick="Cart.add(${p.id}); this.textContent='Added ✓'; this.style.background='#22c55e'; setTimeout(()=>{this.textContent='Add to Cart';this.style.background='';},1800)">Add to Cart</button>
+            </div>
+          </div>
+        </div>`;
+    });
+  </script>
+</body>
+</html>

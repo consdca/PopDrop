@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Controls — PopDrop</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="admin-body">
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">POP<span>DROP</span></a>
+    <div class="nav-links"><a href="index.html">View Store</a><a href="products.html">Products</a></div>
+    <div class="nav-actions">
+      <span class="admin-nav-badge">Admin mode</span>
+      <button class="nav-account" id="admin-sign-out">Sign Out</button>
+    </div>
+  </nav>
+  <main class="admin-main" id="admin-main"></main>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const session = PopDropAccount.session();
+    if (!session || session.role !== "admin") {
+      window.location.replace("account.html");
+    } else {
+      renderAdmin();
+    }
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      })[char]);
+    }
+
+    function renderAdmin() {
+      const orders = PopDropAccount.orders();
+      const inventory = PopDropAccount.inventory(PRODUCTS);
+      const settings = PopDropAccount.read(PopDropAccount.keys.settings, { announcement: "Mix any 6: get 10% off + free shipping" });
+      const revenue = orders.reduce((sum, order) => sum + Number(order.total || 0), 0);
+      const lowStock = inventory.filter(item => item.stock < 12).length;
+      document.getElementById("admin-main").innerHTML = `
+        <section class="admin-shell">
+          <div class="dashboard-head">
+            <div><span class="auth-kicker">Store management</span><h1>ADMIN CONTROLS</h1><p>Manage the local PopDrop demo store from one place.</p></div>
+            <span class="local-admin-label">Browser-local data</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card"><span>Orders</span><strong>${orders.length}</strong><small>All local orders</small></div>
+            <div class="stat-card purple"><span>Revenue</span><strong>${formatPeso(revenue)}</strong><small>Demo total</small></div>
+            <div class="stat-card"><span>Products</span><strong>${PRODUCTS.length}</strong><small>Active flavors</small></div>
+            <div class="stat-card alert"><span>Low stock</span><strong>${lowStock}</strong><small>Below 12 units</small></div>
+          </div>
+          <div class="admin-grid">
+            <section class="admin-panel admin-products">
+              <div class="panel-heading"><div><p>Catalog</p><h2>INVENTORY CONTROLS</h2></div><button class="btn-primary" id="save-inventory">Save Changes</button></div>
+              <div class="inventory-list">
+                ${PRODUCTS.map(product => {
+                  const item = inventory.find(entry => entry.id === product.id);
+                  return `<div class="inventory-row" data-id="${product.id}">
+                    <div class="inventory-product"><span class="inventory-swatch" style="background:${product.color}"></span><div><strong>${escapeHTML(product.name)}</strong><span>${formatPeso(product.price)} · ${escapeHTML(product.flavor)}</span></div></div>
+                    <label><span>Stock</span><input class="form-input stock-input" type="number" min="0" value="${item.stock}" /></label>
+                    <label><span>Status</span><select class="form-input active-input"><option value="true" ${item.active ? "selected" : ""}>Active</option><option value="false" ${!item.active ? "selected" : ""}>Hidden</option></select></label>
+                  </div>`;
+                }).join("")}
+              </div>
+              <p class="form-message success" id="inventory-message" hidden>Inventory changes saved.</p>
+            </section>
+            <aside class="admin-side">
+              <form class="admin-panel" id="announcement-form">
+                <div class="panel-heading"><div><p>Storefront</p><h2>ANNOUNCEMENT</h2></div></div>
+                <label class="form-group"><span class="form-label">Banner Message</span><textarea class="form-input admin-textarea" name="announcement" maxlength="100">${escapeHTML(settings.announcement)}</textarea></label>
+                <button class="btn-purple admin-save" type="submit">Save Message</button>
+                <p class="form-message success" id="announcement-message" hidden>Announcement saved.</p>
+              </form>
+              <section class="admin-panel">
+                <div class="panel-heading"><div><p>Latest activity</p><h2>RECENT ORDERS</h2></div></div>
+                <div class="orders-list">
+                  ${orders.length ? orders.slice(0, 6).map(order => `<div class="order-row"><div><strong>${escapeHTML(order.number)}</strong><span>${escapeHTML(order.email || "Guest")}</span></div><div><strong>${formatPeso(order.total)}</strong><span>${escapeHTML(order.status)}</span></div></div>`).join("") : `<div class="empty-orders"><p>No orders have been placed yet.</p></div>`}
+                </div>
+              </section>
+            </aside>
+          </div>
+          <p class="admin-security-note"><strong>Demo note:</strong> This is a fully static site. Admin access and controls are stored in localStorage and are not secure for production. Connect these screens to a server-side authentication and database service before launch.</p>
+        </section>`;
+
+      document.getElementById("save-inventory").addEventListener("click", () => {
+        const updated = [...document.querySelectorAll(".inventory-row")].map(row => ({
+          id: Number(row.dataset.id),
+          stock: Math.max(0, Number(row.querySelector(".stock-input").value) || 0),
+          active: row.querySelector(".active-input").value === "true"
+        }));
+        PopDropAccount.write(PopDropAccount.keys.inventory, updated);
+        document.getElementById("inventory-message").hidden = false;
+      });
+      document.getElementById("announcement-form").addEventListener("submit", event => {
+        event.preventDefault();
+        PopDropAccount.write(PopDropAccount.keys.settings, Object.fromEntries(new FormData(event.target).entries()));
+        document.getElementById("announcement-message").hidden = false;
+      });
+    }
+
+    document.getElementById("admin-sign-out").addEventListener("click", () => {
+      PopDropAccount.signOut();
+      window.location.href = "account.html";
+    });
+  </script>
+</body>
+</html>

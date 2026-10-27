@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account — PopDrop</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">POP<span>DROP</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Shop</a>
+    </div>
+    <div class="nav-actions">
+      <a href="account.html" class="nav-account" aria-current="page">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+        </svg>
+        <span id="account-label">Sign In</span>
+      </a>
+      <a href="cart.html" class="nav-cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Cart
+        <span class="cart-badge" id="cart-badge">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="account-main" id="account-main"></main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">POP<span>DROP</span></div>
+        <p class="footer-tagline">Real ingredients. Real fizz. No compromises.</p>
+      </div>
+      <div class="footer-col"><p class="footer-col-title">Shop</p><a href="products.html">All Flavors</a><a href="cart.html">Your Cart</a></div>
+      <div class="footer-col"><p class="footer-col-title">Account</p><a href="account.html">Profile</a><a href="checkout.html">Checkout</a></div>
+      <div class="footer-col"><p class="footer-col-title">Support</p><a href="#">FAQ</a><a href="#">Contact</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 PopDrop Beverage Co. All rights reserved.</span><span>Made with fizz and love.</span></div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    const main = document.getElementById("account-main");
+    let authMode = "signin";
+    let authRole = "customer";
+
+    function escapeHTML(value) {
+      return String(value || "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      })[char]);
+    }
+
+    function renderAuth() {
+      main.innerHTML = `
+        <section class="auth-shell">
+          <div class="auth-intro">
+            <span class="auth-kicker">Your fizz, remembered</span>
+            <h1>WELCOME<br>BACK TO<br><span>POPDROP.</span></h1>
+            <p>Save your shipping details, breeze through checkout, track orders, and keep your favorite flavor close.</p>
+            <div class="auth-perks">
+              <span>Faster checkout</span><span>Saved shipping</span><span>Order history</span>
+            </div>
+          </div>
+          <div class="auth-card">
+            <div class="auth-role-tabs" role="tablist" aria-label="Choose sign in type">
+              <button class="auth-role-tab ${authRole === "customer" ? "active" : ""}" data-role="customer">Customer</button>
+              <button class="auth-role-tab ${authRole === "admin" ? "active" : ""}" data-role="admin">Admin</button>
+            </div>
+            <div id="auth-form-wrap"></div>
+          </div>
+        </section>`;
+
+      document.querySelectorAll(".auth-role-tab").forEach(button => {
+        button.addEventListener("click", () => {
+          authRole = button.dataset.role;
+          authMode = "signin";
+          renderAuth();
+        });
+      });
+      renderAuthForm();
+    }
+
+    function renderAuthForm(message = "") {
+      const wrap = document.getElementById("auth-form-wrap");
+      const isAdmin = authRole === "admin";
+      const isCreate = authMode === "create" && !isAdmin;
+      wrap.innerHTML = `
+        <div class="auth-card-heading">
+          <p>${isAdmin ? "Store management" : isCreate ? "Join the drop" : "Good to see you"}</p>
+          <h2>${isAdmin ? "ADMIN SIGN IN" : isCreate ? "CREATE ACCOUNT" : "SIGN IN"}</h2>
+        </div>
+        ${message ? `<p class="form-message error">${escapeHTML(message)}</p>` : ""}
+        ${isAdmin ? `<p class="admin-demo-note"><strong>Local demo access</strong><br>Email: admin@popdrop.com<br>Password: PopDropAdmin!</p>` : ""}
+        <form id="auth-form">
+          ${isCreate ? `
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label" for="firstName">First Name</label><input class="form-input" id="firstName" name="firstName" required autocomplete="given-name" /></div>
+              <div class="form-group"><label class="form-label" for="lastName">Last Name</label><input class="form-input" id="lastName" name="lastName" required autocomplete="family-name" /></div>
+            </div>` : ""}
+          <div class="form-group auth-field"><label class="form-label" for="email">Email Address</label><input class="form-input" id="email" name="email" type="email" required autocomplete="email" /></div>
+          <div class="form-group auth-field"><label class="form-label" for="password">Password</label><input class="form-input" id="password" name="password" type="password" minlength="6" required autocomplete="${isCreate ? "new-password" : "current-password"}" /></div>
+          <button class="btn-primary auth-submit" type="submit">${isAdmin ? "Open Admin Controls" : isCreate ? "Create My Account" : "Sign In"}</button>
+        </form>
+        ${!isAdmin ? `<button class="auth-switch" id="auth-switch">${isCreate ? "Already have an account? Sign in" : "New to PopDrop? Create an account"}</button>` : ""}
+        <p class="local-storage-note">This static demo stores account information only in this browser. Do not use a real password.</p>`;
+
+      document.getElementById("auth-form").addEventListener("submit", event => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(event.target).entries());
+        const result = isCreate
+          ? PopDropAccount.createAccount(data)
+          : PopDropAccount.signIn(data.email, data.password, authRole);
+        if (!result.ok) {
+          renderAuthForm(result.message);
+          return;
+        }
+        window.location.href = isAdmin ? "admin.html" : "account.html";
+      });
+
+      document.getElementById("auth-switch")?.addEventListener("click", () => {
+        authMode = authMode === "signin" ? "create" : "signin";
+        renderAuthForm();
+      });
+    }
+
+    function renderDashboard() {
+      const user = PopDropAccount.customer();
+      const profile = user.profile;
+      const orders = PopDropAccount.orders().filter(order => order.customerId === user.id);
+      main.innerHTML = `
+        <section class="dashboard-shell">
+          <div class="dashboard-head">
+            <div><span class="auth-kicker">PopDrop account</span><h1>HEY, ${escapeHTML(profile.firstName).toUpperCase()}!</h1><p>Your details are saved and ready for your next drop.</p></div>
+            <button class="btn-back" id="sign-out">Sign Out</button>
+          </div>
+          <div class="account-grid">
+            <form class="account-panel account-profile" id="profile-form">
+              <div class="panel-heading"><div><p>Fast checkout</p><h2>SHIPPING DETAILS</h2></div><span class="status-pill">Saved locally</span></div>
+              <div class="form-grid">
+                <div class="form-group"><label class="form-label">First Name</label><input class="form-input" name="firstName" required value="${escapeHTML(profile.firstName)}" /></div>
+                <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" name="lastName" required value="${escapeHTML(profile.lastName)}" /></div>
+                <div class="form-group full"><label class="form-label">Email</label><input class="form-input" name="email" type="email" required value="${escapeHTML(profile.email)}" /></div>
+                <div class="form-group full"><label class="form-label">Mobile Number</label><input class="form-input" name="phone" type="tel" value="${escapeHTML(profile.phone)}" placeholder="+63 917 123 4567" /></div>
+                <div class="form-group full"><label class="form-label">House / Unit / Street</label><input class="form-input" name="address" value="${escapeHTML(profile.address)}" placeholder="Unit 5, 123 Mabini Street" /></div>
+                <div class="form-group"><label class="form-label">Barangay</label><input class="form-input" name="barangay" value="${escapeHTML(profile.barangay)}" placeholder="Barangay Lahug" /></div>
+                <div class="form-group"><label class="form-label">City / Municipality</label><input class="form-input" name="city" value="${escapeHTML(profile.city)}" placeholder="Cebu City" /></div>
+                <div class="form-group"><label class="form-label">Province</label><input class="form-input" name="province" value="${escapeHTML(profile.province || profile.state)}" placeholder="Cebu" /></div>
+                <div class="form-group"><label class="form-label">Postal Code</label><input class="form-input" name="postalCode" inputmode="numeric" maxlength="4" value="${escapeHTML(profile.postalCode || profile.zip)}" placeholder="6000" /></div>
+                <div class="form-group"><label class="form-label">Favorite Flavor</label><select class="form-input" name="favoriteFlavor">${["Citrus Soda","Orange Soda","Lemon Soda","Berry & Orchard Sodas","Grape Soda"].map(flavor => `<option ${profile.favoriteFlavor === flavor ? "selected" : ""}>${flavor}</option>`).join("")}</select></div>
+              </div>
+              <label class="check-row"><input type="checkbox" name="newsletter" ${profile.newsletter ? "checked" : ""} /><span>Send me new flavor drops and special offers</span></label>
+              <div class="profile-actions"><button class="btn-primary" type="submit">Save My Details</button><a class="btn-purple" href="products.html">Shop Flavors</a></div>
+              <p class="form-message success" id="profile-message" hidden>Details saved. You are ready for a faster checkout.</p>
+            </form>
+            <aside class="account-sidebar">
+              <div class="account-panel favorite-card"><p>Your favorite</p><h2>${escapeHTML(profile.favoriteFlavor)}</h2><span>We will keep the cold ones ready.</span></div>
+              <div class="account-panel">
+                <div class="panel-heading"><div><p>Recent activity</p><h2>ORDERS</h2></div><span class="order-count">${orders.length}</span></div>
+                <div class="orders-list">
+                  ${orders.length ? orders.slice(0, 4).map(order => `<div class="order-row"><div><strong>${escapeHTML(order.number)}</strong><span>${new Date(order.createdAt).toLocaleDateString("en-PH")}</span></div><div><strong>${formatPeso(order.total)}</strong><span>${escapeHTML(order.status)}</span></div></div>`).join("") : `<div class="empty-orders"><p>No orders yet.</p><a href="products.html">Find your first flavor →</a></div>`}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>`;
+
+      document.getElementById("sign-out").addEventListener("click", () => {
+        PopDropAccount.signOut();
+        renderAuth();
+        PopDropAccount.updateNav();
+      });
+      document.getElementById("profile-form").addEventListener("submit", event => {
+        event.preventDefault();
+        const values = Object.fromEntries(new FormData(event.target).entries());
+        values.newsletter = event.target.newsletter.checked;
+        PopDropAccount.updateProfile(values);
+        const message = document.getElementById("profile-message");
+        message.hidden = false;
+        PopDropAccount.updateNav();
+      });
+    }
+
+    const session = PopDropAccount.session();
+    if (session?.role === "admin") window.location.href = "admin.html";
+    else if (session?.role === "customer" && PopDropAccount.customer()) renderDashboard();
+    else renderAuth();
+  </script>
+</body>
+</html>
