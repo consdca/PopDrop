@@ -6,7 +6,7 @@ const PRODUCTS = [
     tagline: "Zest meets fizz",
     description: "A tangy explosion of grapefruit, lime, and yuzu. Citrus Burst is the wake-up call your taste buds didn't know they needed. Crisp, refreshing, and unapologetically bold.",
     price: 65,
-    image: "images/CitrusSoda200x200.png",
+    image: "images/CitrusBurst.jpg",
     canColor: "#FF8C00",
     labelColor: "#FFD166",
     accentColor: "#FF4500",
@@ -22,7 +22,7 @@ const PRODUCTS = [
     tagline: "Classic reimagined",
     description: "Real Valencia orange juice meets sparkling water in this nostalgic crowd-pleaser. Bright, sunny, and effervescent — the original PopDrop flavor that started it all.",
     price: 65,
-    image: "images/OrangeSoda200x200.png",
+    image: "images/OrangeFizz.jpg",
     canColor: "#FF4500",
     labelColor: "#FF6B35",
     accentColor: "#FF8C00",
@@ -38,7 +38,7 @@ const PRODUCTS = [
     tagline: "Tart. Bright. Alive.",
     description: "Sicilian lemon zest distilled into every sip. Lemon Drop walks the perfect line between sweet and sour, delivering a sunshine-in-a-can experience from first pop to last drop.",
     price: 65,
-    image: "images/LemonSoda200x200.png",
+    image: "images/LemonDrop.jpg",
     canColor: "#F7C31A",
     labelColor: "#FFE234",
     accentColor: "#FFAA00",
@@ -54,7 +54,7 @@ const PRODUCTS = [
     tagline: "The whole orchard, carbonated",
     description: "Blackberry, raspberry, and wild cherry converge in a deep, fruit-forward soda that tastes like summer at peak ripeness. Complex, layered, dangerously drinkable.",
     price: 75,
-    image: "images/BerryOrchardSoda200x200.png",
+    image: "images/BerryBlast.jpg",
     canColor: "#C0392B",
     labelColor: "#E84560",
     accentColor: "#8A2BE2",
@@ -70,7 +70,7 @@ const PRODUCTS = [
     tagline: "Purple reign",
     description: "Concord grape concentrate meets a hint of elderflower for a soda that's regal, complex, and impossibly smooth. Grape Gang doesn't follow trends — it sets them.",
     price: 75,
-    image: "images/GrapeSoda200x200.png",
+    image: "images/GrapeGang.jpg",
     canColor: "#8A2BE2",
     labelColor: "#A855F7",
     accentColor: "#6A1AB2",
@@ -89,9 +89,9 @@ function formatPeso(value) {
   }).format(Number(value) || 0);
 }
 
-function makeProductImage(p, size) {
+function makeProductImage(product, size) {
   size = size || 180;
-  return `<img class="product-image" src="${p.image}" alt="${p.name} ${p.flavor}" width="${size}" height="${size}" />`;
+  return `<img class="product-image" src="${product.image}" alt="${product.name} ${product.flavor}" style="width:${size}px; height:auto; object-fit:contain;" />`;
 }
 
 function getOrderPricing(items) {
