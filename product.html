@@ -30,9 +30,7 @@
     </div>
   </nav>
 
-  <main id="main-content">
-    <!-- Rendered by JS -->
-  </main>
+  <main id="main-content"></main>
 
   <footer class="footer">
     <div class="footer-grid">
@@ -95,8 +93,7 @@
           <div class="detail-can-box" style="background:${product.highlight}">
             <div class="detail-deco1" style="background:${product.canColor}"></div>
             <div class="detail-deco2" style="background:${product.accentColor}"></div>
-            ${makeProductImage(product, 280)}
-            <span class="detail-volume-pill" style="background:${product.canColor}">${product.volume}</span>
+            <div class="can-wrap">${makeProductImage(product, 360)}</div>
           </div>
 
           <div class="detail-info">
@@ -116,12 +113,27 @@
               </div>
               <div>
                 <p class="detail-stat-label">Price</p>
-                <p class="detail-stat-val" style="color:var(--orange)">${formatPeso(product.price)}</p>
+                <p class="detail-stat-val" style="color:${product.canColor}">${formatPeso(product.price)}</p>
               </div>
             </div>
 
+            <div class="pack-selector" id="pack-selector">
+              <button type="button" class="pack-pill active" data-qty="1">
+                <strong>Single Can</strong>
+                <span>${formatPeso(product.price)}</span>
+              </button>
+              <button type="button" class="pack-pill" data-qty="4">
+                <strong>4-Pack</strong>
+                <span>${formatPeso(product.price * 4)}</span>
+              </button>
+              <button type="button" class="pack-pill" data-qty="6">
+                <strong>6-Pack</strong>
+                <span style="color:#16A34A">Save 10% + Free Ship</span>
+              </button>
+            </div>
+
             <div class="qty-row">
-              <span style="font-size:.875rem;font-weight:700;color:#888">Quantity</span>
+              <span style="font-size:.875rem;font-weight:800;color:var(--muted)">Quantity</span>
               <div class="qty-control">
                 <button class="qty-btn" id="qty-minus">−</button>
                 <span class="qty-val" id="qty-display">1</span>
@@ -131,7 +143,7 @@
             </div>
 
             <div class="detail-actions">
-              <button class="btn-primary" id="add-btn">Add to Cart</button>
+              <button class="btn-primary" id="add-btn" style="background:${product.canColor}">Add to Cart</button>
               <button class="btn-purple" id="buy-btn">Buy Now →</button>
             </div>
           </div>
@@ -151,7 +163,7 @@
           <div class="related-grid">
             ${related.map(p => `
               <a href="product.html?id=${p.id}" class="related-card">
-                <div class="can-wrap">${makeProductImage(p, 80)}</div>
+                <div class="can-wrap">${makeProductImage(p, 90)}</div>
                 <div class="related-info">
                   <p class="name">${p.name}</p>
                   <p class="sub">${p.flavor}</p>
@@ -162,19 +174,35 @@
         </section>
       `;
 
-      // Qty controls
-      document.getElementById("qty-minus").addEventListener("click", () => {
-        if (qty > 1) qty--;
+      function updateQtyDisplay() {
         document.getElementById("qty-display").textContent = qty;
-        document.getElementById("qty-total").textContent = `${formatPeso(product.price * qty)} total`;
-      });
-      document.getElementById("qty-plus").addEventListener("click", () => {
-        qty++;
-        document.getElementById("qty-display").textContent = qty;
-        document.getElementById("qty-total").textContent = `${formatPeso(product.price * qty)} total`;
+        const discount = qty >= 6 ? 0.9 : 1;
+        const total = product.price * qty * discount;
+        document.getElementById("qty-total").textContent = qty >= 6
+          ? `${formatPeso(total)} total (10% off applied)`
+          : `${formatPeso(total)} total`;
+        document.querySelectorAll(".pack-pill").forEach(btn => {
+          btn.classList.toggle("active", Number(btn.dataset.qty) === qty);
+        });
+      }
+
+      document.getElementById("pack-selector").addEventListener("click", e => {
+        const pill = e.target.closest(".pack-pill");
+        if (!pill) return;
+        qty = Number(pill.dataset.qty);
+        updateQtyDisplay();
       });
 
-      // Add to cart
+      document.getElementById("qty-minus").addEventListener("click", () => {
+        if (qty > 1) qty--;
+        updateQtyDisplay();
+      });
+
+      document.getElementById("qty-plus").addEventListener("click", () => {
+        qty++;
+        updateQtyDisplay();
+      });
+
       document.getElementById("add-btn").addEventListener("click", function() {
         Cart.add(product.id, qty);
         this.textContent = "Added ✓";
@@ -182,10 +210,9 @@
         setTimeout(() => {
           this.textContent = "Add to Cart";
           this.classList.remove("btn-success");
-        }, 2000);
+        }, 1800);
       });
 
-      // Buy now
       document.getElementById("buy-btn").addEventListener("click", () => {
         Cart.add(product.id, qty);
         window.location.href = "cart.html";

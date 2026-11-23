@@ -38,44 +38,60 @@
       <div class="hero-inner">
         <div>
           <span class="hero-eyebrow">Real fruit. Real fizz.</span>
-          <h1>FEEL THE POP<br>IN EVERY<br><span>DROP.</span></h1>
+          <h1>FEEL THE POP<br>IN EVERY <span>DROP.</span></h1>
           <p class="hero-sub">Five bold flavors. Zero artificial junk. PopDrop is the soda that tastes like it means business.</p>
           <div class="hero-btns">
-            <a href="products.html" class="btn-primary" style="background:#FFD166;color:#1A1A1A;">Shop All Flavors</a>
-            <a href="products.html" class="btn-ghost">Find Your Flavor</a>
+            <a href="products.html" class="btn-primary" style="background:#FFD166;color:#1E1B18;">Shop All Flavors</a>
+            <a href="#flavor-strip" class="btn-ghost">Explore Flavors</a>
           </div>
         </div>
         <div class="hero-cans" id="hero-cans"></div>
       </div>
-      <svg class="hero-wave" viewBox="0 0 1440 60" fill="white" preserveAspectRatio="none">
+      <svg class="hero-wave" viewBox="0 0 1440 60" fill="#1E1B18" preserveAspectRatio="none">
         <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z"/>
       </svg>
     </section>
 
+    <!-- MARQUEE TICKER -->
+    <div class="marquee-bar" aria-hidden="true">
+      <div class="marquee-track">
+        <span>REAL FRUIT JUICE</span><span>•</span>
+        <span>ZERO ARTIFICIAL JUNK</span><span>•</span>
+        <span>MIX ANY 6 FOR 10% OFF + FREE SHIPPING</span><span>•</span>
+        <span>MAXIMUM FIZZ</span><span>•</span>
+        <span>REAL FRUIT JUICE</span><span>•</span>
+        <span>ZERO ARTIFICIAL JUNK</span><span>•</span>
+        <span>MIX ANY 6 FOR 10% OFF + FREE SHIPPING</span><span>•</span>
+        <span>MAXIMUM FIZZ</span><span>•</span>
+      </div>
+    </div>
+
     <!-- FLAVOR STRIP -->
-    <section class="flavor-strip">
+    <section class="flavor-strip" id="flavor-strip">
       <div class="section-header">
         <h2>PICK YOUR POP</h2>
-        <p>Five flavors. All killer, no filler.</p>
+        <p>Five bold flavors. All killer, no filler.</p>
       </div>
       <div class="flavor-grid" id="flavor-grid"></div>
     </section>
 
     <!-- PROMO BANNER -->
-    <div class="promo-banner">
-      <div>
-        <p class="promo-eyebrow">Limited Time</p>
-        <h2>MIX ANY 6, GET 10% OFF</h2>
-        <p>Build your own variety pack. Six or more cans also ship free.</p>
+    <div style="padding: 0 24px;">
+      <div class="promo-banner">
+        <div>
+          <p class="promo-eyebrow">Limited Time Offer</p>
+          <h2>MIX ANY 6, GET 10% OFF</h2>
+          <p>Build your own variety pack. Six or more cans also ship free.</p>
+        </div>
+        <a href="products.html" class="btn-primary" style="background:#FFD166;color:#1E1B18;">Build a Pack →</a>
       </div>
-      <a href="products.html" class="btn-primary">Build a Pack →</a>
     </div>
 
     <!-- FEATURED -->
     <section class="products-section">
       <div class="products-header">
         <h2>FAN FAVORITES</h2>
-        <a href="products.html" class="see-all">See all →</a>
+        <a href="products.html" class="see-all">See all flavors →</a>
       </div>
       <div class="products-grid" id="featured-grid"></div>
     </section>
@@ -84,17 +100,23 @@
     <section class="values">
       <div class="values-grid">
         <div>
-          <div class="value-icon">🍊</div>
+          <div class="value-icon-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+          </div>
           <h3 class="value-title">Real Fruit Juice</h3>
-          <p class="value-body">Every can is made with actual fruit juice concentrates — not artificial flavoring.</p>
+          <p class="value-body">Every can is made with actual fruit juice concentrates — never artificial flavoring.</p>
         </div>
         <div>
-          <div class="value-icon">⚡</div>
+          <div class="value-icon-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
           <h3 class="value-title">Maximum Fizz</h3>
-          <p class="value-body">Carbonated to the edge of reason. PopDrop delivers a serious bubble experience.</p>
+          <p class="value-body">Carbonated to the edge of reason. PopDrop delivers a crisp, serious bubble hit.</p>
         </div>
         <div>
-          <div class="value-icon">🌱</div>
+          <div class="value-icon-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          </div>
           <h3 class="value-title">Clean Ingredients</h3>
           <p class="value-body">No HFCS, no artificial colors, no compromises. Just good soda done right.</p>
         </div>
@@ -105,7 +127,7 @@
     <section class="newsletter">
       <h2>NEW FLAVORS FIRST</h2>
       <p>Sign up and be the first to know when new drops land.</p>
-      <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:var(--orange);font-weight:800;\'>You\'re in! 🎉</p>'">
+      <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:var(--orange);font-weight:800;\'>You\'re in! Keep an eye on your inbox.</p>'">
         <input type="email" placeholder="your@email.com" required />
         <button type="submit" class="btn-primary">Drop In</button>
       </form>
@@ -149,17 +171,20 @@
   <script src="js/cart.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Hero cans
+    // Hero cans: Berry Blast (left), Orange Fizz (middle), Grape Gang (right)
     const heroCans = document.getElementById("hero-cans");
-    const heroProducts = PRODUCTS.slice(0, 3);
+    const heroProducts = ["Berry Blast", "Orange Fizz", "Grape Gang"]
+      .map(name => PRODUCTS.find(p => p.name === name))
+      .filter(Boolean);
+
     heroProducts.forEach((p, i) => {
-      const offsets = [6, 0, -6];
-      const yOffsets = [0, -20, 0];
-      const sizes = [170, 220, 170];
+      const rotations = [-10, 0, 10];
+      const yOffsets = [14, -14, 14];
+      const sizes = [220, 290, 220];
       const div = document.createElement("div");
       div.className = "hero-can-wrap";
-      div.style.transform = `rotate(${offsets[i]}deg) translateY(${yOffsets[i]}px)`;
-      div.style.zIndex = i === 1 ? 10 : 1;
+      div.style.transform = `rotate(${rotations[i]}deg) translateY(${yOffsets[i]}px)`;
+      div.style.zIndex = i === 1 ? 10 : 2;
       div.innerHTML = makeProductImage(p, sizes[i]);
       heroCans.appendChild(div);
     });
@@ -169,7 +194,7 @@
     PRODUCTS.forEach(p => {
       flavorGrid.innerHTML += `
         <a href="product.html?id=${p.id}" class="flavor-card" style="background:${p.highlight}">
-          <div class="can-wrap">${makeProductImage(p, 120)}</div>
+          <div class="can-wrap">${makeProductImage(p, 155)}</div>
           <div>
             <p class="flavor-name" style="color:${p.canColor}">${p.name}</p>
             <p class="flavor-sub">${p.flavor}</p>
@@ -177,15 +202,13 @@
         </a>`;
     });
 
-    // Featured products
+    // Featured products (Clean single-button card)
     const featuredGrid = document.getElementById("featured-grid");
     PRODUCTS.slice(0, 3).forEach(p => {
       featuredGrid.innerHTML += `
         <div class="product-card">
-          <a href="product.html?id=${p.id}">
-            <div class="product-card-img" style="background:${p.highlight}">
-              <div class="can-wrap">${makeProductImage(p, 160)}</div>
-            </div>
+          <a href="product.html?id=${p.id}" class="product-card-img" style="background:${p.highlight}">
+            <div class="can-wrap">${makeProductImage(p, 210)}</div>
           </a>
           <div class="product-card-body">
             <div class="product-card-top">
@@ -195,8 +218,7 @@
             <p class="product-card-flavor">${p.flavor}</p>
             <p class="product-card-desc">${p.description}</p>
             <div class="product-card-actions">
-              <a href="product.html?id=${p.id}" class="btn-outline">View Details</a>
-              <button class="btn-primary" onclick="Cart.add(${p.id}); this.textContent='Added ✓'; this.style.background='#22c55e'; setTimeout(()=>{this.textContent='Add to Cart';this.style.background='';},1800)">Add to Cart</button>
+              <button class="btn-primary" onclick="Cart.add(${p.id}); this.textContent='Added ✓'; this.classList.add('btn-success'); setTimeout(()=>{this.textContent='Add to Cart';this.classList.remove('btn-success');},1600)">Add to Cart</button>
             </div>
           </div>
         </div>`;
